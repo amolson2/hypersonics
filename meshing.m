@@ -6,7 +6,7 @@ mesh = readSurfaceMesh('file.stl');
 
 mach = 6;
 u_vec = [1, 0, 0];
-v_vec = [0, 1, 0];
+v_vec = [0, 0, 1];
 gamma = 1.4;
 
 xC = zeros(mesh.NumFaces,1);
@@ -20,6 +20,7 @@ beta = zeros(mesh.NumFaces, 1);
 wetted_area = 0;
 non_wetted_area = 0;
 planform_area = 0;
+non_planform_area = 0;
 
 for i=1:mesh.NumFaces
     coords1 = mesh.Vertices(mesh.Faces(i,1), :);
@@ -43,8 +44,10 @@ for i=1:mesh.NumFaces
         non_wetted_area = non_wetted_area + areas(i);
     end
 
-    if mesh.FaceNormals(i, 2) > 0
-        planform_area = planform_area + areas(i) * mesh.FaceNormals(i,2);
+    if mesh.FaceNormals(i, 3) > 0
+        planform_area = planform_area + areas(i) * mesh.FaceNormals(i,3);
+    else
+        non_planform_area = non_planform_area + areas(i) * mesh.FaceNormals(i,3);
     end
 
     %syms bet
@@ -59,7 +62,7 @@ axis equal
 %%
 
 beta = beta_calc(mach, theta, gamma, 0);
-c_p = 4 / (g+1) * sin(beta).^2; 
+c_p = 4 / (gamma+1) * sin(beta).^2; 
 
 %%
 function Beta=beta_calc(M,theta,gamma,n)
