@@ -28,7 +28,6 @@ for j=1:12
 end
 %%
 % higher fidelity - using shock relations from class
-% this is still not right for some reason
 theta = zeros(mesh.NumFaces, 1);
 beta = zeros(mesh.NumFaces, 12);
 c_p_m = zeros(mesh.NumFaces, 12);
@@ -41,3 +40,7 @@ for j=1:12
         p_m(i,j) = p_inf(j)+0.5*rho_inf(j)*v_inf(j)^2*c_p_m(i,j);
     end
 end
+patch('Faces', mesh.Faces, 'Vertices', mesh.Vertices, 'CData', p_m(:,8), 'FaceColor', 'flat')
+view(3)
+axis vis3d
+axis equal
