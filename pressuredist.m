@@ -26,21 +26,22 @@ for j=1:12
         p(i,j) = p_inf(j)+0.5*rho_inf(j)*v_inf(j)^2*c_p(i);
     end
 end
-%%
-% higher fidelity - using shock relations from class
-theta = zeros(mesh.NumFaces, 1);
-beta = zeros(mesh.NumFaces, 12);
-c_p_m = zeros(mesh.NumFaces, 12);
-p_m = zeros(mesh.NumFaces, 12);
-for j=1:12
-    for i=1:mesh.NumFaces
-        theta(i) = aoa(j) + (pi/2 - phi(i)); % is this right?
-        beta(i,j) = beta_calc(M_1(j), theta(i), gamma, 0);
-        c_p_m(i,j) = 4/(gamma+1)*(sin(beta(i,j))^2 - (1/M_1(j)^2));
-        p_m(i,j) = p_inf(j)+0.5*rho_inf(j)*v_inf(j)^2*c_p_m(i,j);
-    end
-end
-patch('Faces', mesh.Faces, 'Vertices', mesh.Vertices, 'CData', p_m(:,8), 'FaceColor', 'flat')
+
+patch('Faces', mesh.Faces, 'Vertices', mesh.Vertices, 'CData', rescale(p(:,8)), 'FaceColor', 'flat')
 view(3)
 axis vis3d
 axis equal
+%%
+% higher fidelity - using shock relations from class
+% theta = zeros(mesh.NumFaces, 1);
+% beta = zeros(mesh.NumFaces, 12);
+% c_p_m = zeros(mesh.NumFaces, 12);
+% p_m = zeros(mesh.NumFaces, 12);
+% for j=1:12
+%     for i=1:mesh.NumFaces
+%         theta(i) = aoa(j) + (pi/2 - phi(i)); % is this right?
+%         beta(i,j) = beta_calc(M_1(j), theta(i), gamma, 0);
+%         c_p_m(i,j) = 4/(gamma+1)*(sin(beta(i,j))^2 - (1/M_1(j)^2));
+%         p_m(i,j) = p_inf(j)+0.5*rho_inf(j)*v_inf(j)^2*c_p_m(i,j);
+%     end
+% end
