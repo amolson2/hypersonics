@@ -34,8 +34,6 @@ figure(1)
 c = p(:,3);
 patch('Faces', mesh.Faces, 'Vertices', mesh.Vertices, 'CData', c, 'FaceColor', 'flat', 'EdgeColor', 'none')
 view(3)
-xlabel('')
-ylabel('')
 axis vis3d
 axis equal
 title('Fuselage Pressure Distribution')
