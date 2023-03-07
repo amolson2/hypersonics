@@ -21,10 +21,10 @@ p = zeros(mesh.NumFaces, 12);
 theta = zeros(mesh.NumFaces, 12);
 v = zeros(mesh.NumFaces, 12);
 M = zeros(mesh.NumFaces, 12);
-
+test = zeros(mesh.NumFaces, 12);
 for j=1:12
     for i=1:mesh.NumFaces
-        phi(i,j) = aoa(j) + pi - acos(dot(incoming_flow, mesh.FaceNormals(i, :)));
+        phi(i,j) = aoa(j) + acos(dot(incoming_flow, mesh.FaceNormals(i, :))/norm(mesh.FaceNormals(i, :))) - pi/2;
         theta(i,j) = pi/2 - phi(i,j);
         c_p(i,j) = 2*cos(phi(i,j))^2;
         p(i,j) = p_inf(j)+0.5*rho_inf(j)*v_inf(j)^2*c_p(i,j);
