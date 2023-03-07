@@ -25,13 +25,13 @@ for j=1:12
     for i=1:mesh.NumFaces
         phi(i,j) = aoa(j) + acos(dot(incoming_flow, mesh.FaceNormals(i, :))/norm(mesh.FaceNormals(i, :)));
         theta(i,j) = pi/2 - phi(i,j);
-        c_p(i,j) = 2*cos(phi(i))^2;
+        c_p(i,j) = 2*cos(phi(i,j))^2;
         p(i,j) = p_inf(j)+0.5*rho_inf(j)*v_inf(j)^2*c_p(i,j);
         v(i,j) = v_inf(j)*cos(theta(i,j));
     end
 end
 figure(1)
-c = p(:,3);
+c = c_p(:,12);
 patch('Faces', mesh.Faces, 'Vertices', mesh.Vertices, 'CData', c, 'FaceColor', 'flat', 'EdgeColor', 'none')
 view(3)
 axis vis3d
@@ -41,7 +41,7 @@ cbar = colorbar;
 cbar.Label.String = 'Pressure (Pa)';
 
 figure(2)
-c = v(:,3);
+c = v(:,12);
 patch('Faces', mesh.Faces, 'Vertices', mesh.Vertices, 'CData', c, 'FaceColor', 'flat', 'EdgeColor', 'none')
 view(3)
 axis vis3d
