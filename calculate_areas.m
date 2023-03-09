@@ -6,6 +6,7 @@ xC = zeros(mesh.NumFaces,1);
 yC = zeros(mesh.NumFaces,1);
 zC = zeros(mesh.NumFaces,1);
 areas = zeros(mesh.NumFaces,1);
+phi = zeros(mesh.NumFaces,1);
 theta = zeros(mesh.NumFaces,1);
 
 for i=1:mesh.NumFaces
@@ -22,8 +23,9 @@ for i=1:mesh.NumFaces
 
     center_coord = [xC, yC, zC];
     areas(i) = 0.5 * norm(cross(AB, AC));
-    theta(i) = u_vec(1) * mesh.FaceNormals(i,1) + u_vec(2) * mesh.FaceNormals(i,2) + u_vec(3) * mesh.FaceNormals(i,3);
 
+    phi(i) = pi - acos(dot(u_vec, mesh.FaceNormals(i, :)));
+    theta(i) = pi/2 - phi(i);
 
     if mesh.FaceNormals(i, 3) > 0
         planform_area = planform_area + areas(i) * mesh.FaceNormals(i,3);
