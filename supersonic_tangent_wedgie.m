@@ -24,7 +24,7 @@ for j=1:len
         c_ptw(i,j) = 4/(gamma + 1) * phi(i,j)^2*(Ks(i,j)^2-1)/K(i,j)^2;
         
         % Tangent Wedge (from our own intuition)
-        [pFactor, rhoFactor, Tfactor, M] = expansion(M_inf, theta(i,j));
+        [pFactor, rhoFactor, Tfactor, M] = expansion(M_inf, theta(i,j)*180/pi);
         p(i,j) = p_inf(j)*pFactor;
         c_ptw = (p(i,j) - p_inf)/(0.5*rho_inf(j)*v_inf(j)^2);
 
