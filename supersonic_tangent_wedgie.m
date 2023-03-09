@@ -29,9 +29,9 @@ for j=1:len
         if theta(i,j) >= 0
 
             % Tangent Wedge (from lecture slides)
-            K(i,j) = M_inf(j)*theta(i,j);
-            Ks(i,j) = (gamma + 1)/4*K(i,j) + sqrt(((gamma+1)/4)^2*K(i,j)^2+1);
-            c_ptw(i,j) = 4/(gamma + 1) * theta(i,j)^2*(Ks(i,j)^2-1)/K(i,j)^2;
+            %K(i,j) = M_inf(j)*theta(i,j);
+            %Ks(i,j) = (gamma + 1)/4*K(i,j) + sqrt(((gamma+1)/4)^2*K(i,j)^2+1);
+            %c_ptw(i,j) = 4/(gamma + 1) * theta(i,j)^2*(Ks(i,j)^2-1)/K(i,j)^2;
             
             % Tangent Wedge (from our own intuition)
             [pFactor, rhoFactor, Tfactor, M,beta] = oblique(M_inf(j), theta(i,j)*180/pi);
