@@ -23,7 +23,6 @@ for j=1:len
         if theta(i,j) >= 0
 
             % Tangent Wedge
-
             [pFactor, rhoFactor, Tfactor, M,beta] = oblique(M_inf(j), theta(i,j)*180/pi);
             
             if isreal(pFactor) == false

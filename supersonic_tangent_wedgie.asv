@@ -1,23 +1,19 @@
 
 function [c_ptw, p] = supersonic_tangent_wedgie(mesh, giant_matrix)
 
-rho_inf = giant_matrix(1,:);
 p_inf = giant_matrix(2,:);
-v_inf = giant_matrix(4,:);
 M_inf = giant_matrix(5,:);
 aoa = giant_matrix(6,:);
 
 incoming_flow = [1, 0, 0];
 gamma = 1.4;
-len = length(rho_inf);
+len = length(p_inf);
 
 %% 
 phi = zeros(mesh.NumFaces, len);
 c_ptw = zeros(mesh.NumFaces, len);
 p = zeros(mesh.NumFaces, len);
 theta = zeros(mesh.NumFaces, len);
-K = zeros(mesh.NumFaces, len);
-Ks = zeros(mesh.NumFaces, len);
 
 for j=1:len
     for i=1:mesh.NumFaces
@@ -26,17 +22,7 @@ for j=1:len
        
         if theta(i,j) >= 0
 
-            % Tangent Wedge (from lecture slides)
-
-            [pFactor, rhoFactor, Tfactor, M,beta] = oblique(M_inf(j), theta(i,j)*180/pi);
-
-            K(i,j) = M_inf(j)*theta(i,j);
-            Ks(i,j) = M_inf(j) * beta;
-
-            %Ks(i,j) = (gamma + 1)/4*K(i,j) + sqrt(((gamma+1)/4)^2*K(i,j)^2+1);
-            c_ptw(i,j) = 4/(gamma + 1) * theta(i,j)^2*(Ks(i,j)^2-1)/K(i,j)^2;
-            
-            % Tangent Wedge (from our own intuition)
+            % Tangent Wedge
             [pFactor, rhoFactor, Tfactor, M,beta] = oblique(M_inf(j), theta(i,j)*180/pi);
             
             if isreal(pFactor) == false
@@ -44,7 +30,7 @@ for j=1:len
                 p(i,j) = p_inf(j);
             else
                 p(i,j) = p_inf(j)*pFactor;
-                c_ptw(i,j) = (p(i,j) - p_inf(j))/(0.5*rho_inf(j)*v_inf(j)^2);
+                c_ptw(i,j) = 2/gamma/M_inf(j)^2*(pFactor-1);
             end
         else 
             c_ptw(i,j) = 0;

@@ -24,7 +24,7 @@ norms = mesh.FaceNormals;
 
 [fx, fy, fz,areas, forces] = coefficients(mesh, flight_conds);
 figure(1)
-c = cps(:,1);
+c = cps(:,12);
 patch('Faces', mesh.Faces, 'Vertices', mesh.Vertices, 'CData', c, 'FaceColor', 'flat', 'EdgeColor', 'none')
 view(3)
 axis vis3d
@@ -34,7 +34,7 @@ cbar = colorbar;
 cbar.Label.String = 'Cp';
 
 figure(2)
-c = pressures(:,1);
+c = pressures(:,12);
 patch('Faces', mesh.Faces, 'Vertices', mesh.Vertices, 'CData', c, 'FaceColor', 'flat', 'EdgeColor', 'none')
 view(3)
 axis vis3d
