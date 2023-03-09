@@ -1,5 +1,5 @@
 
-function [p, c_ptw] = supersonic_tangent_wedgie(mesh, giant_matrix)
+function [c_ptw, p] = supersonic_tangent_wedgie(mesh, giant_matrix)
 
 rho_inf = giant_matrix(1,:);
 p_inf = giant_matrix(2,:);

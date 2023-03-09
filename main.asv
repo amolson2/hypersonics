@@ -61,18 +61,18 @@ patch('Faces', wing_LS.Faces, 'Vertices', wing_LS.Vertices, 'CData', c4, 'FaceCo
 c5 = cp_wing_LE(:,12);
 patch('Faces', wing_LE.Faces, 'Vertices', wing_LE.Vertices, 'CData', c5, 'FaceColor', 'flat', 'EdgeColor', 'none')
 
-c6 = cp_wing_WS(:,12);
-patch('Faces', wing_WS.Faces, 'Vertices', wing_WS.Vertices, 'CData', c6, 'FaceColor', 'flat', 'EdgeColor', 'none')
+c4 = cp_wing_WS(:,12);
+patch('Faces', wing_WS.Faces, 'Vertices', wing_LS.Vertices, 'CData', c4, 'FaceColor', 'flat', 'EdgeColor', 'none')
 
-% c7 = cp_tail(:,12);
-% patch('Faces', tail.Faces, 'Vertices', tail.Vertices, 'CData', c7, 'FaceColor', 'flat', 'EdgeColor', 'none')
+
+
+
 
 view(3)
 axis vis3d
 axis equal
 title('Nose LE Pressure Distribution')
 cbar = colorbar;
-clim([0 0.5])
 cbar.Label.String = 'Pressure (Pa)';
 
 %% Make Figures
