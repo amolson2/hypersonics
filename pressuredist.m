@@ -13,8 +13,7 @@ M_inf = [7.076 7.465 7.501 7.507 7.253 7.104 7.03 6.888 6.427 4.806 3.461 2.002]
 aoa = deg2rad([6.83 12 12 12 12 3.62 1.63 -0.66 -1.63 0.51 0.97 1.31]);
 
 gamma = 1.4;
-%% 
-% Newtonian method
+%% Newtonian method
 phi = zeros(mesh.NumFaces, 12);
 c_p = zeros(mesh.NumFaces, 12);
 p = zeros(mesh.NumFaces, 12);
@@ -31,6 +30,16 @@ for j=1:12
         v(i,j) = v_inf(j)*cos(theta(i,j));
     end
 end
+
+%% Corrected Newtonian
+
+%% Shock Expansion
+theta_nose = 0.2;
+
+
+%% Tangent Wedge
+
+%% Make Figures
 figure(1)
 c = c_p(:,12);
 patch('Faces', mesh.Faces, 'Vertices', mesh.Vertices, 'CData', c, 'FaceColor', 'flat', 'EdgeColor', 'none')
@@ -50,3 +59,5 @@ axis equal
 title('Fuselage Velocity Distribution')
 cbar = colorbar;
 cbar.Label.String = 'Velocity (m/s)';
+
+
