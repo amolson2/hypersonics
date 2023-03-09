@@ -8,6 +8,7 @@ zC = zeros(mesh.NumFaces,1);
 areas = zeros(mesh.NumFaces,1);
 phi = zeros(mesh.NumFaces,1);
 theta = zeros(mesh.NumFaces,1);
+planform_area = 0;
 
 for i=1:mesh.NumFaces
     coords1 = mesh.Vertices(mesh.Faces(i,1), :);
