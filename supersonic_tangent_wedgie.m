@@ -1,7 +1,16 @@
 
-function [p, c_ptw, thetas] = supersonic_tangent_wedgie(mesh, gamma, rho_inf, p_inf, v_inf, M_inf, aoa, incoming_flow)
+function [p, c_ptw] = supersonic_tangent_wedgie(mesh, giant_matrix)
 
+rho_inf = giant_matrix(1,:);
+p_inf = giant_matrix(2,:);
+v_inf = giant_matrix(4,:);
+M_inf = giant_matrix(5,:);
+aoa = giant_matrix(6,:);
+
+incoming_flow = [1, 0, 0];
+gamma = 1.4;
 len = length(rho_inf);
+
 
 %% 
 % Newtonian method
@@ -17,7 +26,6 @@ for j=1:len
         phi(i,j) = aoa(j) + pi - acos(dot(incoming_flow, mesh.FaceNormals(i, :)));
         theta(i,j) = pi/2 - phi(i,j);
        
-        thetas(i,j) = theta(i,j);
         if theta(i,j) >= 0
 
             % Tangent Wedge (from lecture slides)

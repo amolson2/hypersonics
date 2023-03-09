@@ -14,7 +14,9 @@ M_inf = [7.076];
 aoa = deg2rad([6.83]);
 gamma = 1.4;
 
-[pressures, cps, pFactors] = supersonic_tangent_wedgie(mesh, gamma, rho_inf,p_inf,v_inf,M_inf,aoa,incoming_flow);
+flight_conds = [rho_inf; p_inf; alt; v_inf; M_inf; aoa];
+
+[pressures, cps] = supersonic_tangent_wedgie(mesh, flight_conds);
 
 for i = 1:mesh.NumFaces
     for j = 1:length(rho_inf)
