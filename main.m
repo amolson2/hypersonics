@@ -47,6 +47,17 @@ gamma = 1.4;
 [cp_nose, p_nose] = supersonic_tangent_wedgie(nose, flight_conds);
 [cp_tail, p_tail] = supersonic_tangent_wedgie(tail, flight_conds);
 [cp_wing_WS, p_wing_WS] = supersonic_tangent_wedgie(wing_WS, flight_conds);
+
+%% Aerodynamic Coefficients
+nose_LE_coeffs = aerodynamic_coefficients(nose_LE, p_nose_LE, flight_conds);
+nose_coeffs = aerodynamic_coefficients(nose, p_nose, flight_conds);
+wing_LE_coeffs = aerodynamic_coefficients(wing_LE, p_wing_LE, flight_conds);
+fuselage_coeffs = aerodynamic_coefficients(fuselage, p_fuselage, flight_conds);
+wing_LS_coeffs = aerodynamic_coefficients(wing_LS, p_wing_WS, flight_conds);
+wing_WS_coeffs = aerodynamic_coefficients(wing_WS, p_wing_WS, flight_conds);
+tail_coeffs = aerodynamic_coefficients(tail, p_tail, flight_conds);
+
+total_coeffs = nose_LE_coeffs + nose_coeffs + wing_LE_coeffs + fuselage_coeffs + wing_LS_coeffs + wing_WS_coeffs + tail_coeffs;
 %% Make Figures
 figure(1)
 c = cp_nose_LE(:,12);
