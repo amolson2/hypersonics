@@ -1,0 +1,23 @@
+function [f_x, f_y, f_z]=coefficients(mesh, flight_conds)
+
+    len = length(flight_conds(6,:));
+    f_x = zeros(len);
+    f_y = zeros(len);
+    f_z = zeros(len);
+
+    [cps, pressures] = supersonic_tangent_wedgie(mesh, flight_conds);
+    
+    [areas, planform, centers, thetas] = calculate_areas(mesh);
+
+    norms = mesh.FaceNormals;
+    
+    forces = pressures .* areas;
+
+    for j = 1:len
+        f_x(j) = sum(forces(:,j) .* norms(:,1));
+        f_y(j) = sum(forces(:,j) .* norms(:,2));
+        f_z(j) = sum(forces(:,j) .* norms(:,3));
+    
+    end
+end
+

@@ -20,16 +20,9 @@ flight_conds = [rho_inf; p_inf; alt; v_inf; M_inf; aoa];
 
 [cps, pressures] = supersonic_tangent_wedgie(mesh, flight_conds);
 
-[areas, planform, centers, thetas] = calculate_areas(mesh);
-
 norms = mesh.FaceNormals;
 
-forces = pressures .* areas;
-
-f_x = forces .* norms(:,1);
-f_y = forces .* norms(:,2);
-f_z = forces .* norms(:,3);
-
+[fx, fy, fz,areas, forces] = coefficients(mesh, flight_conds);
 figure(1)
 c = cps(:,12);
 patch('Faces', mesh.Faces, 'Vertices', mesh.Vertices, 'CData', c, 'FaceColor', 'flat', 'EdgeColor', 'none')
