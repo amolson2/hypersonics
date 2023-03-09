@@ -13,7 +13,6 @@ len = length(rho_inf);
 
 
 %% 
-% Newtonian method
 phi = zeros(mesh.NumFaces, len);
 c_ptw = zeros(mesh.NumFaces, len);
 p = zeros(mesh.NumFaces, len);
@@ -35,17 +34,19 @@ for j=1:len
             
             % Tangent Wedge (from our own intuition)
             [pFactor, rhoFactor, Tfactor, M,beta] = oblique(M_inf(j), theta(i,j)*180/pi);
-            p(i,j) = p_inf(j)*pFactor;
-           
-            c_ptw(i,j) = (p(i,j) - p_inf(j))/(0.5*rho_inf(j)*v_inf(j)^2);
+            
+            if isreal(pFactor) == false
+                c_ptw(i,j) = 0;
+                p(i,j) = 0;
+            else
+                p(i,j) = p_inf(j)*pFactor;
+                c_ptw(i,j) = (p(i,j) - p_inf(j))/(0.5*rho_inf(j)*v_inf(j)^2);
+            end
         else 
             c_ptw(i,j) = 0;
             p(i,j) = 0;
         end
 
-%          if isreal(pFactor) == false
-%              theta(i,j)*180/pi
-%          end
     end
 
 end
