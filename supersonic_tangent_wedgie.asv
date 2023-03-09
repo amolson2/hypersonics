@@ -28,8 +28,8 @@ for j=1:len
         p(i,j) = p_inf(j)*pFactor;
         c_ptw(i,j) = (p(i,j) - p_inf(j))/(0.5*rho_inf(j)*v_inf(j)^2);
 
-        if mod(i,100) == 0
-            i
+        if pFactor
+            c_ptw(i,j)
         end
     end
 

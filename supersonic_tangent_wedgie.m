@@ -1,7 +1,6 @@
 
-function [p, c_ptw] = supersonic_tangent_wedgie(meshfile, gamma, rho_inf, p_inf, v_inf, M_inf, aoa, incoming_flow)
+function [p, c_ptw] = supersonic_tangent_wedgie(mesh, gamma, rho_inf, p_inf, v_inf, M_inf, aoa, incoming_flow)
 
-mesh = readSurfaceMesh(meshfile);
 len = length(rho_inf);
 
 %% 
@@ -24,14 +23,13 @@ for j=1:len
         c_ptw(i,j) = 4/(gamma + 1) * phi(i,j)^2*(Ks(i,j)^2-1)/K(i,j)^2;
         
         % Tangent Wedge (from our own intuition)
-        %[pFactor, rhoFactor, Tfactor, M] = oblique(M_inf(j), theta(i,j)*180/pi);
-        pFactor = 1;
+        [pFactor, rhoFactor, Tfactor, M] = oblique(M_inf(j), theta(i,j)*180/pi);
         p(i,j) = p_inf(j)*pFactor;
         c_ptw(i,j) = (p(i,j) - p_inf(j))/(0.5*rho_inf(j)*v_inf(j)^2);
 
-        if mod(i,100) == 0
-            i
-        end
+%         if isreal(pFactor) == false
+%             theta(i,j)*180/pi
+%         end
     end
 
 end
