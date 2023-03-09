@@ -42,7 +42,7 @@ gamma = 1.4;
 [cp_wing_LE, p_wing_LE] = corrected_newtonian(wing_LE, flight_conds);
 [cp_fuselage, p_fuselage] = corrected_newtonian(fuselage, flight_conds);
 %% Shock Expansion
-[cp_wing_LS, p_wing_LS] = corrected_newtonian(wing_LS, flight_conds);
+[cp_wing_LS, p_wing_LS] = shock_expansion_cp(wing_LS, flight_conds);
 %% Tangent Wedge
 [cp_nose, p_nose] = supersonic_tangent_wedgie(nose, flight_conds);
 [cp_tail, p_tail] = supersonic_tangent_wedgie(tail, flight_conds);

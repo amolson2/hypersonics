@@ -42,7 +42,7 @@ gamma = 1.4;
 [cp_wing_LE, p_wing_LE] = corrected_newtonian(wing_LE, flight_conds);
 [cp_fuselage, p_fuselage] = corrected_newtonian(fuselage, flight_conds);
 %% Shock Expansion
-[cp_wing_LS, p_wing_LS] = corrected_newtonian(wing_LS, flight_conds);
+[cp_wing_LS, p_wing_LS] = shock_expansion_cp(wing_LS, flight_conds);
 %% Tangent Wedge
 [cp_nose, p_nose] = supersonic_tangent_wedgie(nose, flight_conds);
 [cp_tail, p_tail] = supersonic_tangent_wedgie(tail, flight_conds);
@@ -61,18 +61,18 @@ patch('Faces', wing_LS.Faces, 'Vertices', wing_LS.Vertices, 'CData', c4, 'FaceCo
 c5 = cp_wing_LE(:,12);
 patch('Faces', wing_LE.Faces, 'Vertices', wing_LE.Vertices, 'CData', c5, 'FaceColor', 'flat', 'EdgeColor', 'none')
 
-c4 = cp_wing_WS(:,12);
-patch('Faces', wing_WS.Faces, 'Vertices', wing_LS.Vertices, 'CData', c4, 'FaceColor', 'flat', 'EdgeColor', 'none')
+c6 = cp_wing_WS(:,12);
+patch('Faces', wing_WS.Faces, 'Vertices', wing_WS.Vertices, 'CData', c6, 'FaceColor', 'flat', 'EdgeColor', 'none')
 
-
-
-
+% c7 = cp_tail(:,12);
+% patch('Faces', tail.Faces, 'Vertices', tail.Vertices, 'CData', c7, 'FaceColor', 'flat', 'EdgeColor', 'none')
 
 view(3)
 axis vis3d
 axis equal
 title('Nose LE Pressure Distribution')
 cbar = colorbar;
+clim([0 0.5])
 cbar.Label.String = 'Pressure (Pa)';
 
 %% Make Figures
