@@ -1,3 +1,6 @@
+clear all 
+clc
+
 meshfile = 'fixed_left_tail_mesh_unshared.stl';
 mesh = readSurfaceMesh(meshfile);
 
@@ -11,7 +14,9 @@ M_inf = [7.076];
 aoa = deg2rad([6.83]);
 gamma = 1.4;
 
-[pressures, cps] = supersonic_tangent_wedgie(mesh, gamma, rho_inf,p_inf,v_inf,M_inf,aoa,incoming_flow);
+flight_conds = [rho_inf; p_inf; alt; v_inf; M_inf; aoa];
+
+[pressures, cps] = supersonic_tangent_wedgie(mesh, flight_conds);
 
 for i = 1:mesh.NumFaces
     for j = 1:length(rho_inf)
@@ -20,12 +25,23 @@ for i = 1:mesh.NumFaces
         end
     end
 end
+
 figure(1)
+c = cps(:,1);
+patch('Faces', mesh.Faces, 'Vertices', mesh.Vertices, 'CData', c, 'FaceColor', 'flat', 'EdgeColor', 'none')
+view(3)
+axis vis3d
+axis equal
+title('TW Fuselage Cp Distribution')
+cbar = colorbar;
+cbar.Label.String = 'Cp';
+
+figure(2)
 c = pressures(:,1);
 patch('Faces', mesh.Faces, 'Vertices', mesh.Vertices, 'CData', c, 'FaceColor', 'flat', 'EdgeColor', 'none')
 view(3)
 axis vis3d
 axis equal
-title('Fuselage Pressure Distribution')
+title('TW Fuselage Pressure Distribution')
 cbar = colorbar;
-cbar.Label.String = 'Pressure (Pa)';
+cbar.Label.String = 'Pressures (Pa)';
