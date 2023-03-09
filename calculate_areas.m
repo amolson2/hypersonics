@@ -1,9 +1,12 @@
-function [area_arr, planform, centers] = calculate_areas(mesh)
+function [area_arr, planform, centers, thetas] = calculate_areas(mesh)
+
+u_vec = [1, 0, 0];
 
 xC = zeros(mesh.NumFaces,1);
 yC = zeros(mesh.NumFaces,1);
 zC = zeros(mesh.NumFaces,1);
 areas = zeros(mesh.NumFaces,1);
+theta = zeros(mesh.NumFaces,1);
 
 for i=1:mesh.NumFaces
     coords1 = mesh.Vertices(mesh.Faces(i,1), :);
@@ -19,17 +22,18 @@ for i=1:mesh.NumFaces
 
     center_coord = [xC, yC, zC];
     areas(i) = 0.5 * norm(cross(AB, AC));
+    theta(i) = u_vec(1) * mesh.FaceNormals(i,1) + u_vec(2) * mesh.FaceNormals(i,2) + u_vec(3) * mesh.FaceNormals(i,3);
+
 
     if mesh.FaceNormals(i, 3) > 0
         planform_area = planform_area + areas(i) * mesh.FaceNormals(i,3);
-    else
-        non_planform_area = non_planform_area + areas(i) * mesh.FaceNormals(i,3);
     end
 
 end
 
 area_arr = areas;
 planform = planform_area;
-centers = cneter_coord;
+centers = center_coord;
+thetas = theta;
 
 end
